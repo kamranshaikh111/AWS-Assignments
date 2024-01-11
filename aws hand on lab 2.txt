@@ -1,0 +1,191 @@
+AWS Hands On 
+
+Question:------
+(USE AWS CLI)
+
+Create 6 IAM Users:
+1. Alice  2. Bob  3. Charles 4. David 5. Edward 6. Fred
+
+Create 3 groups:
+1. Developers 2. Operations 3. Audit-Team
+
+Assign the "IAMReadOnlyAccess" policy to the Developers group.
+Assign the "IAMReadOnlyAccess" policy to the Operations group.
+Assign the "IAMFullAccess" policy to the Audit-Team group.
+
+Add Alice, Bob, and Charles to the Developers group.
+Add David and Edward to the Operations group.
+Add Charles and David to the Audit-Team group.
+
+Assign an inline policy to Fred. Log into the AWS account as an IAM user, and list IAM user actions in terminal
+
+Answer:-------
+root@DESKTOP-Q1VPUEC:~# aws configure
+AWS Access Key ID [****************WV5Y]: AKIA4IHOHMUPIQOIPH4O
+AWS Secret Access Key [****************NSXl]: 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
+Default region name [ap-south-1]:
+Default output format [json]:
+
+root@DESKTOP-Q1VPUEC:~# aws iam create-user  --user-name Alice
+{
+    "User": {
+        "Path": "/",
+        "UserName": "Alice",
+        "UserId": "AIDA4IHOHMUPNDIUUC5U6",
+        "Arn": "arn:aws:iam::842313196830:user/Alice",
+        "CreateDate": "2024-01-11T11:02:00Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-user  --user-name Bob
+{
+    "User": {
+        "Path": "/",
+        "UserName": "Bob",
+        "UserId": "AIDA4IHOHMUPL7ERN3PVP",
+        "Arn": "arn:aws:iam::842313196830:user/Bob",
+        "CreateDate": "2024-01-11T11:02:32Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-user  --user-name Charles
+{
+    "User": {
+        "Path": "/",
+        "UserName": "Charles",
+        "UserId": "AIDA4IHOHMUPCLJUZC5ND",
+        "Arn": "arn:aws:iam::842313196830:user/Charles",
+        "CreateDate": "2024-01-11T11:02:45Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-user  --user-name David
+{
+    "User": {
+        "Path": "/",
+        "UserName": "David",
+        "UserId": "AIDA4IHOHMUPGICIU7PRY",
+        "Arn": "arn:aws:iam::842313196830:user/David",
+        "CreateDate": "2024-01-11T11:03:09Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-user  --user-name Edward
+{
+    "User": {
+        "Path": "/",
+        "UserName": "Edward",
+        "UserId": "AIDA4IHOHMUPJ52YGGWU6",
+        "Arn": "arn:aws:iam::842313196830:user/Edward",
+        "CreateDate": "2024-01-11T11:03:22Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-user  --user-name Fred
+{
+    "User": {
+        "Path": "/",
+        "UserName": "Fred",
+        "UserId": "AIDA4IHOHMUPERSWM5KQU",
+        "Arn": "arn:aws:iam::842313196830:user/Fred",
+        "CreateDate": "2024-01-11T11:03:44Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-group  --group-name Developers
+{
+    "Group": {
+        "Path": "/",
+        "GroupName": "Developers",
+        "GroupId": "AGPA4IHOHMUPO77J6F4MB",
+        "Arn": "arn:aws:iam::842313196830:group/Developers",
+        "CreateDate": "2024-01-11T11:10:04Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-group  --group-name Operations
+{
+    "Group": {
+        "Path": "/",
+        "GroupName": "Operations",
+        "GroupId": "AGPA4IHOHMUPNQMEQHLSC",
+        "Arn": "arn:aws:iam::842313196830:group/Operations",
+        "CreateDate": "2024-01-11T11:10:28Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam create-group  --group-name Audit-Team
+{
+    "Group": {
+        "Path": "/",
+        "GroupName": "Audit-Team",
+        "GroupId": "AGPA4IHOHMUPNSQX3C6XX",
+        "Arn": "arn:aws:iam::842313196830:group/Audit-Team",
+        "CreateDate": "2024-01-11T11:10:42Z"
+    }
+}
+root@DESKTOP-Q1VPUEC:~# aws iam add-user-to-group  --group-name  Developers --user-name Alice
+root@DESKTOP-Q1VPUEC:~# aws iam add-user-to-group  --group-name  Developers --user-name Bob
+root@DESKTOP-Q1VPUEC:~# aws iam add-user-to-group  --group-name  Developers --user-name Charles
+root@DESKTOP-Q1VPUEC:~# aws iam add-user-to-group  --group-name  Operations --user-name David
+root@DESKTOP-Q1VPUEC:~# aws iam add-user-to-group  --group-name  Operations --user-name Edward
+root@DESKTOP-Q1VPUEC:~# aws iam add-user-to-group  --group-name  Audit-Team --user-name David
+root@DESKTOP-Q1VPUEC:~# aws iam add-user-to-group  --group-name  Audit-Team --user-name Charles
+
+root@DESKTOP-Q1VPUEC:~# aws iam attach-group-policy --group-name Developers  --policy-arn arn:aws:iam::aws:policy/IAMReadOnlyAccess
+root@DESKTOP-Q1VPUEC:~# aws iam attach-group-policy --group-name Operations --policy-arn arn:aws:iam::aws:policy/IAMReadOnlyAccess
+root@DESKTOP-Q1VPUEC:~# aws iam attach-group-policy --group-name Audit-Team --policy-arn arn:aws:iam::aws:policy/IAMFullAccess
+
+root@DESKTOP-Q1VPUEC:~# aws iam put-user-policy --user-name Fred --policy-name My_policy --policy-document file:///root/inline_policy.json
+
+root@DESKTOP-Q1VPUEC:~# aws configure
+AWS Access Key ID [****************PH4O]: AKIA4IHOHMUPKMAXP6OQ
+AWS Secret Access Key [****************7Qj8]: 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
+Default region name [ap-south-1]:
+Default output format [json]:
+root@DESKTOP-Q1VPUEC:~# aws sts get-caller-identity
+{
+    "UserId": "AIDA4IHOHMUPERSWM5KQU",
+    "Account": "842313196830",
+    "Arn": "arn:aws:iam::842313196830:user/Fred"
+}
+
+root@DESKTOP-Q1VPUEC:~# aws iam list-users
+{
+    "Users": [
+        {
+            "Path": "/",
+            "UserName": "Alice",
+            "UserId": "AIDA4IHOHMUPNDIUUC5U6",
+            "Arn": "arn:aws:iam::842313196830:user/Alice",
+            "CreateDate": "2024-01-11T11:02:00Z"
+        },
+        {
+            "Path": "/",
+            "UserName": "Bob",
+            "UserId": "AIDA4IHOHMUPL7ERN3PVP",
+            "Arn": "arn:aws:iam::842313196830:user/Bob",
+            "CreateDate": "2024-01-11T11:02:32Z"
+        },
+        {
+            "Path": "/",
+            "UserName": "Charles",
+            "UserId": "AIDA4IHOHMUPCLJUZC5ND",
+            "Arn": "arn:aws:iam::842313196830:user/Charles",
+            "CreateDate": "2024-01-11T11:02:45Z"
+        },
+        {
+            "Path": "/",
+            "UserName": "David",
+            "UserId": "AIDA4IHOHMUPGICIU7PRY",
+            "Arn": "arn:aws:iam::842313196830:user/David",
+            "CreateDate": "2024-01-11T11:03:09Z"
+        },
+        {
+            "Path": "/",
+            "UserName": "Edward",
+            "UserId": "AIDA4IHOHMUPJ52YGGWU6",
+            "Arn": "arn:aws:iam::842313196830:user/Edward",
+            "CreateDate": "2024-01-11T11:03:22Z"
+        },
+        {
+            "Path": "/",
+            "UserName": "Fred",
+            "UserId": "AIDA4IHOHMUPERSWM5KQU",
+            "Arn": "arn:aws:iam::842313196830:user/Fred",
+            "CreateDate": "2024-01-11T11:03:44Z"
+        }
+    ]
+}
